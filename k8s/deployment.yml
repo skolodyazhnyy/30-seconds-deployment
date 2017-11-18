@@ -1,0 +1,39 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: news-service
+  labels:
+    app: news-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: news-service
+    spec:
+      containers:
+      - name: news-service
+        image: eu.gcr.io/myproject/news-service:${TAG}
+        command:
+        ports:
+          - containerPort: 8080
+        volumeMounts:
+          - name: news-config
+            mountPath: /etc/news/
+            readOnly: true
+      volumes:
+        - name: news-config
+          configMap: { name: news-config }
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: news-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: news-service
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080

@@ -1,0 +1,8 @@
+server:
+  idletimeout: 5s
+  readtimeout: 5s
+  writetimeout: 5s
+  addr: ":8080"
+
+database:
+  dsn: "root:@(localhost:3306)/news?charset=utf8&parseTime=true"
