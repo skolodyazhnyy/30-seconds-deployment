@@ -7,7 +7,7 @@ export TAG
 install:
 	go get .
 
-test:
+test: install
 	go test ./...
 
 build: install
